@@ -11,8 +11,21 @@ const GameTypeValue string = "game"
 
 type Game struct {
 	BaseModel
-	PlayerIds []uuid.UUID `gorm:"type:uuid[]" json:"playerIds"`
-	State     int         `gorm:"type:int" json:"state"`
+	PlayerIds []uuid.UUID `json:"playerIds"`
+	State     int         `json:"state"`
+}
+
+func CreateGame(id uuid.UUID) Game {
+	return Game{
+		BaseModel: BaseModel{
+			Id:        uuid.New(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			Type:      GameTypeValue,
+		},
+		PlayerIds: []uuid.UUID{uuid.New()},
+		State:     0,
+	}
 }
 
 func GetAllGames() []Game {
